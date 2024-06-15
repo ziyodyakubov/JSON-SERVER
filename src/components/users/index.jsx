@@ -1,10 +1,12 @@
 import axios from "axios";
-// import UserModal from "../ui/modal/index";
+import UserModal from "../modal";
 import { useEffect, useState } from "react";
 
 const Index = () => {
   const [users, setUsers] = useState([]);
   const [modal, setModal] = useState(false);
+  const [search,SearchUser] = useState("")
+  const [user,setUser] = useState({})
   const [userToEdit, setUserToEdit] = useState(null);
 
   useEffect(() => {
@@ -15,27 +17,32 @@ const Index = () => {
     });
   }, []);
 
-  const toggleModal = () => {
-    setModal((prevModal) => !prevModal);
-    if (!modal) {
-      setUserToEdit(null); // Clear the user to edit when closing the modal
-    }
+  const handleEdit = (user) => {
+    setUser(user)
+    setModal(true)
+    // axios.delete(`http://localhost:3000/users/${user}`)
   };
 
-  const handleEdit = (user) => {
-    setUserToEdit(user);
-    setModal(true);
-  };
+  const handleDelete = (id) =>{
+    axios.delete(`http://localhost:3000/users/${id}`).then(res=>{
+      if(res.status === 200){
+        window.location.reload()
+      }
+    })
+  }
+
+  const toggle = () =>{
+    setUser({})
+    setModal(false)
+  }
 
   return (
     <>
-      {/* <UserModal 
+      <UserModal 
         open={modal} 
-        toggle={toggleModal} 
-        users={users} 
-        setUsers={setUsers}
-        userToEdit={userToEdit}
-      /> */}
+        toggle={toggle}
+        user={user}
+      />
       <div className="container">
         <h2 className="text-center my-3 font-weight-bold">Users</h2>
         <button className="btn btn-success my-3" onClick={() => setModal(true)}>ADD USER</button>
@@ -59,7 +66,7 @@ const Index = () => {
                 <td>
                   <button className="btn btn-warning mx-1" onClick={() => handleEdit(item)}><box-icon name='edit-alt'></box-icon></button>
                   <button className="btn btn-primary mx-1"><box-icon name='show-alt' ></box-icon></button>
-                  <button className="btn btn-danger mx-1"><box-icon name='trash' ></box-icon></button>
+                  <button className="btn btn-danger mx-1" onClick={() => handleDelete(item.id)}><box-icon name='trash' ></box-icon></button>
                 </td>
               </tr>
             ))}
