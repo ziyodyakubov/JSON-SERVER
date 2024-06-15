@@ -1,13 +1,11 @@
 import axios from "axios";
-import UserModal from "../modal";
+import UserModal from "@modal";
 import { useEffect, useState } from "react";
 
 const Index = () => {
   const [users, setUsers] = useState([]);
   const [modal, setModal] = useState(false);
-  const [search,SearchUser] = useState("")
   const [user,setUser] = useState({})
-  const [userToEdit, setUserToEdit] = useState(null);
 
   useEffect(() => {
     axios.get("http://localhost:3000/users").then((res) => {
@@ -17,10 +15,15 @@ const Index = () => {
     });
   }, []);
 
+  const handleEye = (id)=>{
+    axios.get(`http://localhost:3000/users/${id}`).then(res=>{
+      console.log(res.data)
+    })
+  }
+
   const handleEdit = (user) => {
     setUser(user)
     setModal(true)
-    // axios.delete(`http://localhost:3000/users/${user}`)
   };
 
   const handleDelete = (id) =>{
@@ -65,7 +68,7 @@ const Index = () => {
                 <td>{item.number}</td>
                 <td>
                   <button className="btn btn-warning mx-1" onClick={() => handleEdit(item)}><box-icon name='edit-alt'></box-icon></button>
-                  <button className="btn btn-primary mx-1"><box-icon name='show-alt' ></box-icon></button>
+                  {/* <Link to={`users/${item.id}`}><button className="btn btn-primary mx-1"><box-icon name='show-alt' ></box-icon></button></Link> */}
                   <button className="btn btn-danger mx-1" onClick={() => handleDelete(item.id)}><box-icon name='trash' ></box-icon></button>
                 </td>
               </tr>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import axios from "axios";
 
@@ -37,12 +37,11 @@ const UserModal = (props) => {
   return (
     <Modal isOpen={open} toggle={toggle}>
       <ModalHeader toggle={toggle}>
-        <h3>{form.id ? "Edit User" : "Add User"}</h3>
+        <h2>Add User</h2>
       </ModalHeader>
       <ModalBody>
         <Form onSubmit={handleSubmit} id="user-form">
           <FormGroup>
-            <Label for="name">Name</Label>
             <Input
               type="text"
               name="name"
@@ -55,7 +54,6 @@ const UserModal = (props) => {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="email">Email</Label>
             <Input
             defaultValue={user.email}
               type="email"
@@ -68,7 +66,6 @@ const UserModal = (props) => {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="phone">Phone</Label>
             <Input
               type="tel"
               name="number"
@@ -85,11 +82,11 @@ const UserModal = (props) => {
       <ModalFooter>
         <Button color="secondary" onClick={toggle}>Cancel</Button>
         <Button
-          color="primary"
+          color="success"
           type="submit"
           form="user-form"
         >
-          {form.id ? "Update User" : "Add User"}
+          Add User
         </Button>
       </ModalFooter>
     </Modal>
