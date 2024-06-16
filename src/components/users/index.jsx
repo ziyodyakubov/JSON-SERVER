@@ -52,7 +52,7 @@ const Index = () => {
         <table className="table table-striped table-bordered my-3 p-4">
           <thead className="">
             <tr>
-              <th>T/R</th>
+              <th className="text-center">T/R</th>
               <th>Name</th>
               <th>Email</th>
               <th>Phone</th>
@@ -62,7 +62,7 @@ const Index = () => {
           <tbody>
             {users.map((item, index) => (
               <tr key={index}>
-                <td>{index + 1}</td>
+                <td className="text-center">{index + 1}</td>
                 <td>{item.name}</td>
                 <td>{item.email}</td>
                 <td>{item.number}</td>
